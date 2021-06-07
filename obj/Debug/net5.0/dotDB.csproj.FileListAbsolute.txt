@@ -1,0 +1,16 @@
+Z:\CSharp\dotDB\obj\Debug\net5.0\dotDB.csprojAssemblyReference.cache
+Z:\CSharp\dotDB\obj\Debug\net5.0\dotDB.GeneratedMSBuildEditorConfig.editorconfig
+Z:\CSharp\dotDB\obj\Debug\net5.0\dotDB.AssemblyInfoInputs.cache
+Z:\CSharp\dotDB\obj\Debug\net5.0\dotDB.AssemblyInfo.cs
+Z:\CSharp\dotDB\obj\Debug\net5.0\dotDB.csproj.CoreCompileInputs.cache
+Z:\CSharp\dotDB\bin\Debug\net5.0\dotDB.exe
+Z:\CSharp\dotDB\bin\Debug\net5.0\dotDB.deps.json
+Z:\CSharp\dotDB\bin\Debug\net5.0\dotDB.runtimeconfig.json
+Z:\CSharp\dotDB\bin\Debug\net5.0\dotDB.runtimeconfig.dev.json
+Z:\CSharp\dotDB\bin\Debug\net5.0\dotDB.dll
+Z:\CSharp\dotDB\bin\Debug\net5.0\ref\dotDB.dll
+Z:\CSharp\dotDB\bin\Debug\net5.0\dotDB.pdb
+Z:\CSharp\dotDB\obj\Debug\net5.0\dotDB.dll
+Z:\CSharp\dotDB\obj\Debug\net5.0\ref\dotDB.dll
+Z:\CSharp\dotDB\obj\Debug\net5.0\dotDB.pdb
+Z:\CSharp\dotDB\obj\Debug\net5.0\dotDB.genruntimeconfig.cache

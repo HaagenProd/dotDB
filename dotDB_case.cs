@@ -5,13 +5,13 @@ namespace dotDB
 {
     public class dotDB_case{
 
-        private dotDB_table.types dataType;
+        private dotDB_table.type dataType;
         private string currentData;
         
         private bool exception_ = false;
         public bool hasException {get=>exception_;}
 
-        public dotDB_case(dotDB_table.types type, string data){
+        public dotDB_case(dotDB_table.type type, string data){
             dataType = type;
             currentData = data;
 
@@ -25,7 +25,7 @@ namespace dotDB
                 if (!exception_){
                     //Console.WriteLine("Data stored successfully");
                 }else{
-                    dataType = dotDB_table.types.Null;
+                    dataType = dotDB_table.type.Null;
                     currentData = "N/A";
                 }
             }
@@ -36,17 +36,17 @@ namespace dotDB
         }
 
         private void checkData(){
-            if (dataType == dotDB_table.types.Int){
+            if (dataType == dotDB_table.type.Int){
                 int value;
                 if (!Int32.TryParse(currentData, out value)){
                     throw new ArgumentException("Assigned data type : INT; Current data cannot be used as INT");
                 }
-            }else if (dataType == dotDB_table.types.Float){
+            }else if (dataType == dotDB_table.type.Float){
                 float value;
                 if (!float.TryParse(currentData, out value)){
                     throw new ArgumentException("Assigned data type : FLOAT; Current data cannot be used as FLOAT");
                 }
-            }else if (dataType == dotDB_table.types.Bool){
+            }else if (dataType == dotDB_table.type.Bool){
                 bool value;
                 currentData = currentData.ToLower();
                 if (!Boolean.TryParse(currentData, out value)){

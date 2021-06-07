@@ -1,12 +1,14 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.IO;
 
 namespace dotDB
 {
     public class dotDB_table{
         
         readonly string tableName;
-        private Dictionary<string, types> tableStructure = new Dictionary<string, types>();
+        private Dictionary<string, type> tableStructure = new Dictionary<string, type>();
         private Dictionary<string, Dictionary<string, dotDB_case>> tableData = new Dictionary<string, Dictionary<string, dotDB_case>>();
 
         private bool initialized = false;
@@ -14,12 +16,16 @@ namespace dotDB
         private bool useCustomID;
         private int incrementedID = 0;
 
-        public enum types
+        public enum type
         {
             Int, Float, String, Bool, Null
         }
+        
+        public enum comparator{
+            Sup_Equal, Inf_Equal, Equal, Sup, Inf, Not
+        }
 
-        public dotDB_table(string Name, Dictionary<string, types> structure, bool useCustomID_ = false){
+        public dotDB_table(string Name, Dictionary<string, type> structure, bool useCustomID_ = false){
             tableName = Name;
             tableStructure = structure;
             useCustomID = useCustomID_;
@@ -51,6 +57,68 @@ namespace dotDB
             }else{
                 throw new Exception("Current table was not initialized");
             }
+        }
+
+        public Dictionary<string, Dictionary<string, dotDB_case>> search(string args, string values, comparator[] comparators){
+            string[] args_ = args.Split(",");
+            string[] values_ = values.Split(",");
+
+            Dictionary<string, Dictionary<string, dotDB_case>> results = new Dictionary<string, Dictionary<string, dotDB_case>>();
+
+            foreach (var id in tableData.Keys){
+                bool corresponding = false;
+                Dictionary<string, dotDB_case> correspondingValues = new Dictionary<string, dotDB_case>();
+                for (int argIndex = 0; argIndex < args_.Length; argIndex++){
+                    type currentArgType = tableStructure[args_[argIndex]];
+                    switch(comparators[argIndex]){
+                        default:
+                            corresponding = tableData[id][args_[argIndex]].getData() == values_[argIndex];
+                            break;
+                        case comparator.Not:
+                            corresponding = tableData[id][args_[argIndex]].getData() != values_[argIndex];
+                            break;
+                        case comparator.Sup_Equal:
+                            if (currentArgType == type.Int){
+                                corresponding = Int32.Parse(tableData[id][args_[argIndex]].getData()) >= Int32.Parse(values_[argIndex]);
+                            }else if (currentArgType == type.Float){
+                                corresponding = float.Parse(tableData[id][args_[argIndex]].getData()) >= float.Parse(values_[argIndex]);
+                            }
+                            break;
+                        case comparator.Inf_Equal:
+                            if (currentArgType == type.Int){
+                                corresponding = Int32.Parse(tableData[id][args_[argIndex]].getData()) <= Int32.Parse(values_[argIndex]);
+                            }else if (currentArgType == type.Float){
+                                corresponding = float.Parse(tableData[id][args_[argIndex]].getData()) <= float.Parse(values_[argIndex]);
+                            }
+                            break;
+                        case comparator.Sup:
+                            if (currentArgType == type.Int){
+                                corresponding = Int32.Parse(tableData[id][args_[argIndex]].getData()) > Int32.Parse(values_[argIndex]);
+                            }else if (currentArgType == type.Float){
+                                corresponding = float.Parse(tableData[id][args_[argIndex]].getData()) > float.Parse(values_[argIndex]);
+                            }
+                            break;
+                        case comparator.Inf:
+                            if (currentArgType == type.Int){
+                                corresponding = Int32.Parse(tableData[id][args_[argIndex]].getData()) < Int32.Parse(values_[argIndex]);
+                            }else if (currentArgType == type.Float){
+                                corresponding = float.Parse(tableData[id][args_[argIndex]].getData()) < float.Parse(values_[argIndex]);
+                            }
+                            break;
+                    }
+
+                }
+
+                if(corresponding){
+                    foreach (var key in tableData[id].Keys){
+                        correspondingValues.Add(key, tableData[id][key]);
+                    }
+
+                    results.Add(id, correspondingValues);
+                }
+            }
+
+            return results;
         }
 
         public void remove_data(int index){

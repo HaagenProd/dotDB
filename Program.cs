@@ -35,7 +35,7 @@ namespace dotDB
 
             table.showTable();
 
-            foreach (var result in table.search("val0", "10", new dotDB_table.comparator[]{dotDB_table.comparator.Inf}).Keys){
+            foreach (var result in table.researchByComparators("val0", "103", new dotDB_table.comparator[]{dotDB_table.comparator.Not}).Keys){
                 Console.WriteLine(result);
             }
         }

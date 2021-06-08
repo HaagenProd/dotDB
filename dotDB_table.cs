@@ -62,7 +62,6 @@ namespace dotDB
         public Dictionary<string, Dictionary<string, dotDB_case>> researchByComparators(string args, string values, comparator[] comparators){
             string[] args_ = args.Split(",");
             string[] values_ = values.Split(",");
-
             Dictionary<string, Dictionary<string, dotDB_case>> results = new Dictionary<string, Dictionary<string, dotDB_case>>();
 
             foreach (var id in tableData.Keys){

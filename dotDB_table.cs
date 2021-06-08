@@ -5,11 +5,11 @@ using System.IO;
 
 namespace dotDB
 {
-    public class dotDB_table{
+    public class Table{
         
         readonly string tableName;
         private Dictionary<string, type> tableStructure = new Dictionary<string, type>();
-        private Dictionary<string, Dictionary<string, dotDB_case>> tableData = new Dictionary<string, Dictionary<string, dotDB_case>>();
+        private Dictionary<string, Dictionary<string, Case>> tableData = new Dictionary<string, Dictionary<string, Case>>();
 
         private bool initialized = false;
 
@@ -25,7 +25,7 @@ namespace dotDB
             Sup_Equal, Inf_Equal, Equal, Sup, Inf, Not
         }
 
-        public dotDB_table(string Name, Dictionary<string, type> structure, bool useCustomID_ = false){
+        public Table(string Name, Dictionary<string, type> structure, bool useCustomID_ = false){
             tableName = Name;
             tableStructure = structure;
             useCustomID = useCustomID_;
@@ -38,11 +38,11 @@ namespace dotDB
             if (initialized){
                 string lineNum = useCustomID ? customID: incrementedID.ToString();
                 
-                Dictionary<string, dotDB_case> newLine = new Dictionary<string, dotDB_case>();
+                Dictionary<string, Case> newLine = new Dictionary<string, Case>();
                 bool hasException = false;
                 
                 foreach (var key in data.Keys){
-                    dotDB_case newCase = new dotDB_case(tableStructure[key], data[key]);
+                    Case newCase = new Case(tableStructure[key], data[key]);
                     if (!newCase.hasException){
                         newLine.Add(key, newCase);
                     }else{
@@ -59,14 +59,14 @@ namespace dotDB
             }
         }
 
-        public Dictionary<string, Dictionary<string, dotDB_case>> researchByComparators(string args, string values, comparator[] comparators){
+        public Dictionary<string, Dictionary<string, Case>> researchByComparators(string args, string values, comparator[] comparators){
             string[] args_ = args.Split(",");
             string[] values_ = values.Split(",");
-            Dictionary<string, Dictionary<string, dotDB_case>> results = new Dictionary<string, Dictionary<string, dotDB_case>>();
+            Dictionary<string, Dictionary<string, Case>> results = new Dictionary<string, Dictionary<string, Case>>();
 
             foreach (var id in tableData.Keys){
                 bool corresponding = false;
-                Dictionary<string, dotDB_case> correspondingValues = new Dictionary<string, dotDB_case>();
+                Dictionary<string, Case> correspondingValues = new Dictionary<string, Case>();
                 for (int argIndex = 0; argIndex < args_.Length; argIndex++){
                     type currentArgType = tableData[id][args_[argIndex]].getType();
                     switch(comparators[argIndex]){

@@ -3,15 +3,15 @@ using System.Collections.Generic;
 
 namespace dotDB
 {
-    public class dotDB_case{
+    public class Case{
 
-        private dotDB_table.type dataType;
+        private Table.type dataType;
         private string currentData;
         
         private bool exception_ = false;
         public bool hasException {get=>exception_;}
 
-        public dotDB_case(dotDB_table.type type, string data){
+        public Case(Table.type type, string data){
             dataType = type;
             currentData = data;
 
@@ -25,7 +25,7 @@ namespace dotDB
                 if (!exception_){
                     //Console.WriteLine("Data stored successfully");
                 }else{
-                    dataType = dotDB_table.type.Null;
+                    dataType = Table.type.Null;
                     currentData = "N/A";
                 }
             }
@@ -35,22 +35,22 @@ namespace dotDB
             return currentData;
         }
 
-        public dotDB_table.type getType(){
+        public Table.type getType(){
             return dataType;
         }
 
         private void checkData(){
-            if (dataType == dotDB_table.type.Int){
+            if (dataType == Table.type.Int){
                 int value;
                 if (!Int32.TryParse(currentData, out value)){
                     throw new ArgumentException("Assigned data type : INT; Current data cannot be used as INT");
                 }
-            }else if (dataType == dotDB_table.type.Float){
+            }else if (dataType == Table.type.Float){
                 float value;
                 if (!float.TryParse(currentData, out value)){
                     throw new ArgumentException("Assigned data type : FLOAT; Current data cannot be used as FLOAT");
                 }
-            }else if (dataType == dotDB_table.type.Bool){
+            }else if (dataType == Table.type.Bool){
                 bool value;
                 currentData = currentData.ToLower();
                 if (!Boolean.TryParse(currentData, out value)){

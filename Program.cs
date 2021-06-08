@@ -7,11 +7,11 @@ namespace dotDB
     {
         static void Main(string[] args)
         {
-            dotDB_table table = new dotDB_table("test", new Dictionary<string, dotDB_table.type>() 
+            Table table = new Table("test", new Dictionary<string, Table.type>() 
             {
-                {"val0", dotDB_table.type.Int},
-                {"val1", dotDB_table.type.String},
-                {"val2", dotDB_table.type.Bool}
+                {"val0", Table.type.Int},
+                {"val1", Table.type.String},
+                {"val2", Table.type.Bool}
             });
 
             table.add_data(new Dictionary<string, string>() {
@@ -34,7 +34,7 @@ namespace dotDB
 
             table.showTable();
 
-            foreach (var result in table.researchByComparators("val0,val1", "52,bonjour bonjour", new dotDB_table.comparator[]{dotDB_table.comparator.Sup, dotDB_table.comparator.Equal}).Keys){
+            foreach (var result in table.researchByComparators("val0,val1", "52,bonjour bonjour", new Table.comparator[]{Table.comparator.Sup, Table.comparator.Equal}).Keys){
                 Console.WriteLine(result);
             }
         }

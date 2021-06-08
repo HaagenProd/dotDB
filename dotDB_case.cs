@@ -35,6 +35,10 @@ namespace dotDB
             return currentData;
         }
 
+        public dotDB_table.type getType(){
+            return dataType;
+        }
+
         private void checkData(){
             if (dataType == dotDB_table.type.Int){
                 int value;

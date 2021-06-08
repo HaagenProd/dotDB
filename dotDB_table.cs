@@ -69,7 +69,7 @@ namespace dotDB
                 bool corresponding = false;
                 Dictionary<string, dotDB_case> correspondingValues = new Dictionary<string, dotDB_case>();
                 for (int argIndex = 0; argIndex < args_.Length; argIndex++){
-                    type currentArgType = tableStructure[args_[argIndex]];
+                    type currentArgType = tableData[id][args_[argIndex]].getType();
                     switch(comparators[argIndex]){
                         default:
                             corresponding = tableData[id][args_[argIndex]].getData() == values_[argIndex];

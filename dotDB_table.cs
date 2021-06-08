@@ -126,7 +126,7 @@ namespace dotDB
         }
 
         public void showTable(){
-            string types_ = "   ";
+            string types_ = "ID";
 
             foreach (var key in tableStructure.Keys){
                 types_ += "| " + key + " : " + tableStructure[key].ToString();

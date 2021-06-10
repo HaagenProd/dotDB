@@ -39,21 +39,18 @@ namespace dotDB
                 string lineNum = useCustomID ? customID: incrementedID.ToString();
                 
                 Dictionary<string, Case> newLine = new Dictionary<string, Case>();
-                bool hasException = false;
+
+                foreach (var key in tableStructure.Keys){
+                    newLine.Add(key, new Case(tableStructure[key], "N/A"));
+                }
                 
                 foreach (var key in data.Keys){
                     Case newCase = new Case(tableStructure[key], data[key]);
-                    if (!newCase.hasException){
-                        newLine.Add(key, newCase);
-                    }else{
-                        hasException = true;
-                    }
+                    newLine[key] = newCase;
                 }
                 
-                if (!hasException){
-                    tableData.Add(lineNum, newLine);
-                    incrementedID++;
-                }
+                tableData.Add(lineNum, newLine);
+                incrementedID++;
             }else{
                 throw new Exception("Current table was not initialized");
             }

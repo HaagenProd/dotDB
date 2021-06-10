@@ -5,30 +5,32 @@ namespace dotDB
 {
     public class Case{
 
+        private List<String> nonAssigned = new List<string>() {"n/a", "N/A"};
+
         private Table.type dataType;
         private string currentData;
         
-        private bool exception_ = false;
-        public bool hasException {get=>exception_;}
+        private bool noData = false;
+        public bool NoData { get=> noData;}
 
         public Case(Table.type type, string data){
             dataType = type;
-            currentData = data;
 
-            try{
-                checkData();
-            }catch (Exception e){
-                exception_ = true;
-                Console.WriteLine("An Error has occured");
-                Console.WriteLine(e);
-            }finally{
-                if (!exception_){
-                    //Console.WriteLine("Data stored successfully");
+            if (!nonAssigned.Contains(data)){
+                if (checkData(data.ToLower())){
+                    currentData = data;
                 }else{
-                    dataType = Table.type.Null;
                     currentData = "N/A";
                 }
+            }else{
+                currentData = data;
             }
+        }
+
+        public void editData(string newData){
+            currentData = newData;
+
+            checkData(newData.ToLower());
         }
 
         public string getData(){
@@ -39,24 +41,40 @@ namespace dotDB
             return dataType;
         }
 
-        private void checkData(){
-            if (dataType == Table.type.Int){
-                int value;
-                if (!Int32.TryParse(currentData, out value)){
-                    throw new ArgumentException("Assigned data type : INT; Current data cannot be used as INT");
+        private bool checkData(string newData){
+            bool exception_ = false;
+            
+            try{
+                newData = newData.ToLower();
+
+                if (dataType == Table.type.Int){
+                    int value;
+                    if (!Int32.TryParse(newData, out value)){
+                        throw new ArgumentException("Assigned data type : INT; Current data cannot be used as INT.");
+                    }
+                }else if (dataType == Table.type.Float){
+                    float value;
+                    if (!float.TryParse(newData, out value)){
+                        throw new ArgumentException("Assigned data type : FLOAT; Current data cannot be used as FLOAT");
+                    }
+                }else if (dataType == Table.type.Bool){
+                    bool value;
+                    if (!Boolean.TryParse(newData, out value)){
+                        throw new ArgumentException("Assigned data type : BOOL; Current data cannot be used as BOOL");
+                    }
                 }
-            }else if (dataType == Table.type.Float){
-                float value;
-                if (!float.TryParse(currentData, out value)){
-                    throw new ArgumentException("Assigned data type : FLOAT; Current data cannot be used as FLOAT");
-                }
-            }else if (dataType == Table.type.Bool){
-                bool value;
-                currentData = currentData.ToLower();
-                if (!Boolean.TryParse(currentData, out value)){
-                    throw new ArgumentException("Assigned data type : BOOL; Current data cannot be used as BOOL");
-                }
+            }catch (Exception e){
+                exception_ = true;
+                Console.WriteLine("An Error has occured");
+                Console.WriteLine(e);
             }
+                
+            if (!exception_){
+                return true;
+                //Console.WriteLine("Data stored successfully");
+            }else{
+                return false;
+            }       
         }
     }
 }

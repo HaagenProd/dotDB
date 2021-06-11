@@ -56,6 +56,12 @@ namespace dotDB
             }
         }
 
+        public void update_data(string id,string key, string data){
+            if (initialized){
+                tableData[id][key].editData(data);
+            }
+        }
+
         public Dictionary<string, Dictionary<string, Case>> researchByComparators(string args, string values, comparator[] comparators){
             string[] args_ = args.Split(",");
             string[] values_ = values.Split(",");
@@ -102,7 +108,6 @@ namespace dotDB
                             }
                             break;
                     }
-
                 }
 
                 if(corresponding){

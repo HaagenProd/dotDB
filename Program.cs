@@ -37,6 +37,10 @@ namespace dotDB
             foreach (var result in table.researchByComparators("val0,val1", "52,bonjour bonjour", new Table.comparator[]{Table.comparator.Sup, Table.comparator.Equal}).Keys){
                 Console.WriteLine(result);
             }
+
+            table.update_data("2","val1", "FROMAGE");
+
+            table.showTable();
         }
     }
 }

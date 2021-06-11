@@ -62,49 +62,47 @@ namespace dotDB
             }
         }
 
-        public Dictionary<string, Dictionary<string, Case>> researchByComparators(string args, string values, comparator[] comparators){
-            string[] args_ = args.Split(",");
-            string[] values_ = values.Split(",");
+        public Dictionary<string, Dictionary<string, Case>> researchByComparators(string[] args, string[] values, comparator[] comparators){
             Dictionary<string, Dictionary<string, Case>> results = new Dictionary<string, Dictionary<string, Case>>();
 
             foreach (var id in tableData.Keys){
                 bool corresponding = false;
                 Dictionary<string, Case> correspondingValues = new Dictionary<string, Case>();
-                for (int argIndex = 0; argIndex < args_.Length; argIndex++){
-                    type currentArgType = tableData[id][args_[argIndex]].getType();
+                for (int argIndex = 0; argIndex < args.Length; argIndex++){
+                    type currentArgType = tableData[id][args[argIndex]].getType();
                     switch(comparators[argIndex]){
                         default:
-                            corresponding = tableData[id][args_[argIndex]].getData() == values_[argIndex];
+                            corresponding = tableData[id][args[argIndex]].getData() == values[argIndex];
                             break;
                         case comparator.Not:
-                            corresponding = tableData[id][args_[argIndex]].getData() != values_[argIndex];
+                            corresponding = tableData[id][args[argIndex]].getData() != values[argIndex];
                             break;
                         case comparator.Sup_Equal:
                             if (currentArgType == type.Int){
-                                corresponding = Int32.Parse(tableData[id][args_[argIndex]].getData()) >= Int32.Parse(values_[argIndex]);
+                                corresponding = Int32.Parse(tableData[id][args[argIndex]].getData()) >= Int32.Parse(values[argIndex]);
                             }else if (currentArgType == type.Float){
-                                corresponding = float.Parse(tableData[id][args_[argIndex]].getData()) >= float.Parse(values_[argIndex]);
+                                corresponding = float.Parse(tableData[id][args[argIndex]].getData()) >= float.Parse(values[argIndex]);
                             }
                             break;
                         case comparator.Inf_Equal:
                             if (currentArgType == type.Int){
-                                corresponding = Int32.Parse(tableData[id][args_[argIndex]].getData()) <= Int32.Parse(values_[argIndex]);
+                                corresponding = Int32.Parse(tableData[id][args[argIndex]].getData()) <= Int32.Parse(values[argIndex]);
                             }else if (currentArgType == type.Float){
-                                corresponding = float.Parse(tableData[id][args_[argIndex]].getData()) <= float.Parse(values_[argIndex]);
+                                corresponding = float.Parse(tableData[id][args[argIndex]].getData()) <= float.Parse(values[argIndex]);
                             }
                             break;
                         case comparator.Sup:
                             if (currentArgType == type.Int){
-                                corresponding = Int32.Parse(tableData[id][args_[argIndex]].getData()) > Int32.Parse(values_[argIndex]);
+                                corresponding = Int32.Parse(tableData[id][args[argIndex]].getData()) > Int32.Parse(values[argIndex]);
                             }else if (currentArgType == type.Float){
-                                corresponding = float.Parse(tableData[id][args_[argIndex]].getData()) > float.Parse(values_[argIndex]);
+                                corresponding = float.Parse(tableData[id][args[argIndex]].getData()) > float.Parse(values[argIndex]);
                             }
                             break;
                         case comparator.Inf:
                             if (currentArgType == type.Int){
-                                corresponding = Int32.Parse(tableData[id][args_[argIndex]].getData()) < Int32.Parse(values_[argIndex]);
+                                corresponding = Int32.Parse(tableData[id][args[argIndex]].getData()) < Int32.Parse(values[argIndex]);
                             }else if (currentArgType == type.Float){
-                                corresponding = float.Parse(tableData[id][args_[argIndex]].getData()) < float.Parse(values_[argIndex]);
+                                corresponding = float.Parse(tableData[id][args[argIndex]].getData()) < float.Parse(values[argIndex]);
                             }
                             break;
                     }
@@ -118,7 +116,6 @@ namespace dotDB
                     results.Add(id, correspondingValues);
                 }
             }
-
             return results;
         }
 

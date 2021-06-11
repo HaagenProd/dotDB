@@ -1,4 +1,3 @@
-Z:\CSharp\dotDB\obj\Debug\net5.0\dotDB.csprojAssemblyReference.cache
 Z:\CSharp\dotDB\obj\Debug\net5.0\dotDB.GeneratedMSBuildEditorConfig.editorconfig
 Z:\CSharp\dotDB\obj\Debug\net5.0\dotDB.AssemblyInfoInputs.cache
 Z:\CSharp\dotDB\obj\Debug\net5.0\dotDB.AssemblyInfo.cs
@@ -30,3 +29,4 @@ C:\Users\Doomiprane\Documents\GitHub\dotDB\obj\Debug\net5.0\dotDB.dll
 C:\Users\Doomiprane\Documents\GitHub\dotDB\obj\Debug\net5.0\ref\dotDB.dll
 C:\Users\Doomiprane\Documents\GitHub\dotDB\obj\Debug\net5.0\dotDB.pdb
 C:\Users\Doomiprane\Documents\GitHub\dotDB\obj\Debug\net5.0\dotDB.genruntimeconfig.cache
+Z:\CSharp\dotDB\obj\Debug\net5.0\dotDB.csproj.AssemblyReference.cache

@@ -11,7 +11,7 @@ namespace dotDB
         private string currentData;
         
         private bool noData = false;
-        public bool NoData { get=> noData;}
+        public bool NoData { get => noData;}
 
         public Case(Table.type type, string data){
             dataType = type;

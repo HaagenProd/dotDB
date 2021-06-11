@@ -9,7 +9,7 @@ namespace dotDB
         
         readonly string tableName;
         private Dictionary<string, type> tableStructure = new Dictionary<string, type>();
-        private Dictionary<string, Dictionary<string, Case>> tableData = new Dictionary<string, Dictionary<string, Case>>();
+        private Dictionary<string, Dictionary<string, Cell>> tableData = new Dictionary<string, Dictionary<string, Cell>>();
 
         private bool initialized = false;
 
@@ -38,14 +38,14 @@ namespace dotDB
             if (initialized){
                 string lineNum = useCustomID ? customID: incrementedID.ToString();
                 
-                Dictionary<string, Case> newLine = new Dictionary<string, Case>();
+                Dictionary<string, Cell> newLine = new Dictionary<string, Cell>();
 
                 foreach (var key in tableStructure.Keys){
-                    newLine.Add(key, new Case(tableStructure[key], "N/A"));
+                    newLine.Add(key, new Cell(tableStructure[key], "N/A"));
                 }
                 
                 foreach (var key in data.Keys){
-                    Case newCase = new Case(tableStructure[key], data[key]);
+                    Cell newCase = new Cell(tableStructure[key], data[key]);
                     newLine[key] = newCase;
                 }
                 
@@ -62,12 +62,12 @@ namespace dotDB
             }
         }
 
-        public Dictionary<string, Dictionary<string, Case>> researchByComparators(string[] args, string[] values, comparator[] comparators){
-            Dictionary<string, Dictionary<string, Case>> results = new Dictionary<string, Dictionary<string, Case>>();
+        public Dictionary<string, Dictionary<string, Cell>> researchByComparators(string[] args, string[] values, comparator[] comparators){
+            Dictionary<string, Dictionary<string, Cell>> results = new Dictionary<string, Dictionary<string, Cell>>();
 
             foreach (var id in tableData.Keys){
                 bool corresponding = false;
-                Dictionary<string, Case> correspondingValues = new Dictionary<string, Case>();
+                Dictionary<string, Cell> correspondingValues = new Dictionary<string, Cell>();
                 for (int argIndex = 0; argIndex < args.Length; argIndex++){
                     type currentArgType = tableData[id][args[argIndex]].getType();
                     switch(comparators[argIndex]){
@@ -119,8 +119,28 @@ namespace dotDB
             return results;
         }
 
-        public void remove_data(int index){
-            tableData.Remove(index.ToString());
+        public bool isInitialized()
+        {
+            return initialized;
+        }
+
+        public bool hasID(string id)
+        {
+            return tableData.ContainsKey(id);
+        }
+
+        public bool hasKeyInStructure(string key)
+        {
+            return tableStructure.ContainsKey(key);
+        }
+
+        public string getTableName()
+        {
+            return tableName;
+        }
+
+        public void remove_data(string ID){
+            tableData.Remove(ID);
         }
 
         public void showTable(){

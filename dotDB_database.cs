@@ -15,9 +15,15 @@ namespace dotDB
 
 		public bool request(string request)
         {
-			string[] split = request.Split(" ");
+			string[] keysAndValues_ = request.Split("/");
+			string[] keysAndValues = keysAndValues_.Length == 2 ? keysAndValues_[1].Split(";") : new string[0];
 
-            switch (split[0])
+			string[] split = request.Split(" ");
+			
+			Table currentTable;
+			string tableName;
+
+			switch (split[0])
             {
 				default:
 					throw new ArgumentException("Current request is unknown");
@@ -26,14 +32,20 @@ namespace dotDB
                     {
 						default:
 							throw new ArgumentException("Current type is unknown");
-						case "TABLE": //CREATE TABLE *table* *type*,*name* ... 
-							string tableName = split[2];
+						case "TABLE": //CREATE TABLE *table* /*type*,*name*; ... 
+							tableName = split[2];
 							List<string> structure = new List<string>();
 							Dictionary<string, Table.type> newStructure = new Dictionary<string, Table.type>();
+							bool useCustomID = false;
 
-							for (int i = 3; i < split.Length; i++)
+							if (split[3] == "True")
                             {
-								structure.Add(split[i]);
+								useCustomID = true;
+							}
+
+							for (int i = 0; i < keysAndValues.Length; i++)
+                            {
+								structure.Add(keysAndValues[i]);
                             }
 
 							foreach(var composant in structure)
@@ -42,9 +54,97 @@ namespace dotDB
 								newStructure.Add(composantSplit[1], interpretType(composantSplit[0]));
                             }
 
-							db_tables.Add(tableName, new Table(tableName, newStructure));
+							add_table(tableName, newStructure, useCustomID);
 
 							return true;
+                    }
+
+				case "DELETE": //DELETE *table* (*key* ...)
+					if (db_tables.ContainsKey(split[1]))
+                    {
+						currentTable = db_tables[split[1]];
+                    }
+                    else
+                    {
+						throw new ArgumentException(split[1] + " does not exists in " + db_Name + " database");
+                    }
+
+					switch (split.Length)
+                    {
+						default:
+							throw new ArgumentException("Not enough argument in request");
+						case 3:
+							if (currentTable.hasID(split[2]))
+                            {
+								currentTable.remove_data(split[2]);
+								return true;
+							}
+                            else
+                            {
+								throw new ArgumentException(split[1] + " has no lign with ID " + split[2]);
+                            }
+						case 2:
+							remove_table(split[1]);
+							return true;
+                    }
+
+				case "UPDATE": //UPDATE *table* *ID* /*key*;*value* ...
+					if (db_tables.ContainsKey(split[1]))
+                    {
+						currentTable = db_tables[split[1]];
+
+						if (currentTable.hasID(split[2]))
+                        {
+							List<string> keysToUpdate = new List<string>();
+
+							foreach (var keyToUpdate in keysAndValues)
+							{
+								string[] KeySplit = keyToUpdate.Split(",");
+								if (currentTable.hasKeyInStructure(KeySplit[0]))
+                                {
+									currentTable.update_data(split[2], KeySplit[0], KeySplit[1]);
+								}
+                                else
+                                {
+									throw new ArgumentException(currentTable.getTableName() + " table has no key '" + KeySplit[0] + "' in it's structure");
+								}
+							}
+						}
+                        else
+                        {
+							throw new ArgumentException(currentTable.getTableName() + " has no ID '" + split[2] + "'");
+                        }
+
+						return true;
+                    }
+                    else
+                    {
+						throw new ArgumentException(split[1] + " does not exists in " + db_Name + " database");
+                    }
+
+				case "INSERT": //INSERT *table* /*key*;*val ...
+					tableName = split[1];
+
+					if (db_tables.ContainsKey(tableName))
+                    {
+						currentTable = db_tables[tableName];
+
+						Dictionary<string, string> newData = new Dictionary<string, string>();
+
+						foreach (var arg in keysAndValues)
+                        {
+							string[] args = arg.Split(",");
+
+							newData.Add(args[0], args[1]);
+                        }
+
+						currentTable.add_data(newData);
+
+						return true;
+                    }
+                    else
+                    {
+						throw new ArgumentException(split[1] + " does not exists in " + db_Name + " database");
                     }
 
 				case "SHOW":
@@ -87,7 +187,7 @@ namespace dotDB
 			db_tables.Remove(tableName);
 		}
 
-		public Dictionary<string, Dictionary<string, Case>> research(string request)
+		public Dictionary<string, Dictionary<string, Cell>> research(string request)
         {
 			string[] splitedRequest = request.Split(",");
 			
@@ -101,7 +201,7 @@ namespace dotDB
 			List<Table.comparator> comparators = new List<Table.comparator>();
 			List<string> values = new List<string>();
 
-			Dictionary<string, Dictionary<string, Case>> result = new Dictionary<string, Dictionary<string, Case>>();
+			Dictionary<string, Dictionary<string, Cell>> result = new Dictionary<string, Dictionary<string, Cell>>();
 
 			if (fct[0] == "FINDAND")
             {
@@ -116,8 +216,8 @@ namespace dotDB
 					values.Add(split[2]);
 				}
 
-				Dictionary<string, Dictionary<string, Case>> firstResult = selectedTable.researchByComparators(keys.ToArray(), values.ToArray(), comparators.ToArray());
-				Dictionary<string, Dictionary<string, Case>> finalResult = new Dictionary<string, Dictionary<string, Case>>();
+				Dictionary<string, Dictionary<string, Cell>> firstResult = selectedTable.researchByComparators(keys.ToArray(), values.ToArray(), comparators.ToArray());
+				Dictionary<string, Dictionary<string, Cell>> finalResult = new Dictionary<string, Dictionary<string, Cell>>();
 				
 				if (keysToReturn[0] == "*")
                 {
@@ -127,7 +227,7 @@ namespace dotDB
                 {
 					foreach (var id in firstResult.Keys)
 					{
-						finalResult.Add(id, new Dictionary<string, Case>());
+						finalResult.Add(id, new Dictionary<string, Cell>());
 
 						foreach (var key in keysToReturn)
 						{

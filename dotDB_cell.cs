@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace dotDB
 {
-    public class Case{
+    public class Cell{
 
         private List<String> nonAssigned = new List<string>() {"n/a", "N/A"};
 
@@ -13,7 +13,7 @@ namespace dotDB
         private bool noData = false;
         public bool NoData { get => noData;}
 
-        public Case(Table.type type, string data){
+        public Cell(Table.type type, string data){
             dataType = type;
 
             if (!nonAssigned.Contains(data)){

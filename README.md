@@ -7,11 +7,11 @@ I'm working on this project on my free time, dotDB is not ready for use yet.
 The goal is to create a database system usable in C#, either through "queries" or APIs.
 
 ## Working exemples
-### 'Request' style
+### 'Request' style (WIP)
 ```C#
 using dotDB;
 
-Database db = new Database("MyDataBase");
+Database db = new Database("MyDatabase");
 
 db.request("CREATE TABLE MyTable /INT,Something;STRING,Other"); //Request to create a new table 'MyTable'
 
@@ -20,6 +20,19 @@ db.request("INSERT MyTable /Something,1025;Other,Hello"); //Request to Insert da
 db.request("SHOW MyTable"); //Request to show in the Console 'MyTable' table
 
 db.request("UPDATE MyTable 0 /Something,10"); //Request to Update the 'Something' value in 'MyTable' table
+```
+### 'API' style (WIP)
+```C#
+Database db = new Database("MyDatabase");
+
+Dictionary<string, Table.type> tableStructure = new Dictionary<string, Table.type>() { //Create tableStructure
+    {"Something", Table.type.Int },
+    {"Other", Table.type.String }
+};
+
+db.add_table("MyTable", tableStructure); //Initialize the new Table
+
+db.remove_table("MyTable"); //Remove the new Table
 ```
 
 ## Support me !

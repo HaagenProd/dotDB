@@ -7,6 +7,7 @@ I'm working on this project on my free time, dotDB is not ready for use yet.
 The goal is to create a database system usable in C#, either through "queries" or APIs.
 
 ## Working exemples
+### 'Request' style
 ```C#
 using dotDB;
 

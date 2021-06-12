@@ -45,64 +45,119 @@ namespace dotDB
                 }
                 
                 foreach (var key in data.Keys){
-                    Cell newCase = new Cell(tableStructure[key], data[key]);
-                    newLine[key] = newCase;
+                    if (tableStructure.ContainsKey(key))
+                    {
+                        Cell newCase = new Cell(tableStructure[key], data[key]);
+                        newLine[key] = newCase;
+                    }
+                    else
+                    {
+                        throw exceptionThrower.exception_NoKeyInStructure(tableName, key);
+                    }
                 }
                 
                 tableData.Add(lineNum, newLine);
                 incrementedID++;
             }else{
-                throw new Exception("Current table was not initialized");
+                throw exceptionThrower.exception_TableNotInitilized(tableName);
             }
         }
 
         public void update_data(string id,string key, string data){
             if (initialized){
-                tableData[id][key].editData(data);
+                if (tableStructure.ContainsKey(key))
+                {
+                    tableData[id][key].editData(data);
+                }
+                else
+                {
+                    throw exceptionThrower.exception_NoKeyInStructure(tableName, key);
+                }
+            }
+            else
+            {
+                throw exceptionThrower.exception_TableNotInitilized(tableName);
             }
         }
 
-        public Dictionary<string, Dictionary<string, Cell>> researchByComparators(string[] args, string[] values, comparator[] comparators){
+        public Dictionary<string, Dictionary<string, Cell>> researchByComparators(string[] keys, string[] values, comparator[] comparators){
             Dictionary<string, Dictionary<string, Cell>> results = new Dictionary<string, Dictionary<string, Cell>>();
+
+            for (int i = 0; i < keys.Length; i++)
+            {
+                if (!tableStructure.ContainsKey(keys[i]))
+                {
+                    throw exceptionThrower.exception_NoKeyInStructure(tableName, keys[i]);
+                }
+
+                Table.type dataType = tableStructure[keys[i]];
+
+                if (dataType == Table.type.Int)
+                {
+                    int value;
+                    if (!Int32.TryParse(values[i], out value))
+                    {
+                        throw exceptionThrower.exception_valTypeNotCorresponding(dataType.ToString(), values[i]);
+                    }
+                }
+                else if (dataType == Table.type.Float)
+                {
+                    float value;
+                    if (!float.TryParse(values[i], out value))
+                    {
+                        throw exceptionThrower.exception_valTypeNotCorresponding(dataType.ToString(), values[i]);
+                    }
+                }
+                else if (dataType == Table.type.Bool)
+                {
+                    bool value;
+                    if (!Boolean.TryParse(values[i], out value))
+                    {
+                        throw exceptionThrower.exception_valTypeNotCorresponding(dataType.ToString(), values[i]);
+                    }
+                }
+            }
 
             foreach (var id in tableData.Keys){
                 bool corresponding = false;
+                
                 Dictionary<string, Cell> correspondingValues = new Dictionary<string, Cell>();
-                for (int argIndex = 0; argIndex < args.Length; argIndex++){
-                    type currentArgType = tableData[id][args[argIndex]].getType();
+               
+                for (int argIndex = 0; argIndex < keys.Length; argIndex++){
+                    type currentArgType = tableData[id][keys[argIndex]].getType();
                     switch(comparators[argIndex]){
                         default:
-                            corresponding = tableData[id][args[argIndex]].getData() == values[argIndex];
+                            corresponding = tableData[id][keys[argIndex]].getData() == values[argIndex];
                             break;
                         case comparator.Not:
-                            corresponding = tableData[id][args[argIndex]].getData() != values[argIndex];
+                            corresponding = tableData[id][keys[argIndex]].getData() != values[argIndex];
                             break;
                         case comparator.Sup_Equal:
                             if (currentArgType == type.Int){
-                                corresponding = Int32.Parse(tableData[id][args[argIndex]].getData()) >= Int32.Parse(values[argIndex]);
+                                corresponding = Int32.Parse(tableData[id][keys[argIndex]].getData()) >= Int32.Parse(values[argIndex]);
                             }else if (currentArgType == type.Float){
-                                corresponding = float.Parse(tableData[id][args[argIndex]].getData()) >= float.Parse(values[argIndex]);
+                                corresponding = float.Parse(tableData[id][keys[argIndex]].getData()) >= float.Parse(values[argIndex]);
                             }
                             break;
                         case comparator.Inf_Equal:
                             if (currentArgType == type.Int){
-                                corresponding = Int32.Parse(tableData[id][args[argIndex]].getData()) <= Int32.Parse(values[argIndex]);
+                                corresponding = Int32.Parse(tableData[id][keys[argIndex]].getData()) <= Int32.Parse(values[argIndex]);
                             }else if (currentArgType == type.Float){
-                                corresponding = float.Parse(tableData[id][args[argIndex]].getData()) <= float.Parse(values[argIndex]);
+                                corresponding = float.Parse(tableData[id][keys[argIndex]].getData()) <= float.Parse(values[argIndex]);
                             }
                             break;
                         case comparator.Sup:
                             if (currentArgType == type.Int){
-                                corresponding = Int32.Parse(tableData[id][args[argIndex]].getData()) > Int32.Parse(values[argIndex]);
+                                corresponding = Int32.Parse(tableData[id][keys[argIndex]].getData()) > Int32.Parse(values[argIndex]);
                             }else if (currentArgType == type.Float){
-                                corresponding = float.Parse(tableData[id][args[argIndex]].getData()) > float.Parse(values[argIndex]);
+                                corresponding = float.Parse(tableData[id][keys[argIndex]].getData()) > float.Parse(values[argIndex]);
                             }
                             break;
                         case comparator.Inf:
                             if (currentArgType == type.Int){
-                                corresponding = Int32.Parse(tableData[id][args[argIndex]].getData()) < Int32.Parse(values[argIndex]);
+                                corresponding = Int32.Parse(tableData[id][keys[argIndex]].getData()) < Int32.Parse(values[argIndex]);
                             }else if (currentArgType == type.Float){
-                                corresponding = float.Parse(tableData[id][args[argIndex]].getData()) < float.Parse(values[argIndex]);
+                                corresponding = float.Parse(tableData[id][keys[argIndex]].getData()) < float.Parse(values[argIndex]);
                             }
                             break;
                     }
@@ -140,7 +195,15 @@ namespace dotDB
         }
 
         public void remove_data(string ID){
-            tableData.Remove(ID);
+
+            if (tableData.ContainsKey(ID))
+            {
+                tableData.Remove(ID);
+            }
+            else
+            {
+                throw exceptionThrower.exception_NoIDInTable(tableName, ID);
+            }
         }
 
         public void showTable(){

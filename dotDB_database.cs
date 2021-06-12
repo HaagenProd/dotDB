@@ -182,6 +182,47 @@ namespace dotDB
 			db_tables.Add(tableName, newTable);
 		}
 
+		public void add_data(string table, Dictionary<string, string> data, string customID = null)
+        {
+			Table currentTable;
+
+			if (db_tables.ContainsKey(table))
+            {
+				currentTable = db_tables[table];
+
+				currentTable.add_data(data, customID);
+            }
+            else
+            {
+				throw new ArgumentException(db_Name + " does not have '" + table + "' table");
+            }
+        }
+
+		public void update_data(string table, string id, Dictionary<string, string> newData)
+        {
+			Table currentTable;
+
+			if (db_tables.ContainsKey(table))
+            {
+				currentTable = db_tables[table];
+				
+				foreach(var key in newData.Keys)
+                {
+                    try
+                    {
+						currentTable.update_data(id, key, newData[key]);
+					}catch(Exception e)
+                    {
+						Console.WriteLine(e);
+                    }
+                }
+			}
+            else
+            {
+				throw new ArgumentException(db_Name + " does not have '" + table + "' table");
+			}
+        }
+
 		public void remove_table(string tableName)
 		{
 			db_tables.Remove(tableName);

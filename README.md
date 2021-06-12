@@ -6,6 +6,20 @@ I'm working on this project on my free time, dotDB is not ready for use yet.
 ## The purpose of the project
 The goal is to create a database system usable in C#, either through "queries" or APIs.
 
+## Working exemples
+```C#
+using dotDB;
+
+Database db = new Database("MyDataBase");
+
+db.request("CREATE TABLE MyTable /INT,Something;STRING,Other"); //Request to create a new table 'MyTable'
+
+db.request("INSERT MyTable /Something,1025;Other,Hello"); //Request to Insert data into 'MyTable' table
+
+db.request("SHOW MyTable"); //Request to show in the Console 'MyTable' table
+
+db.request("UPDATE MyTable 0 /Something,10"); //Request to Update the 'Something' value in 'MyTable' table
+```
 
 ## Support me !
 You still can buy me a pizza [Here](https://www.buymeacoffee.com/Doomiprane)

@@ -23,4 +23,4 @@ db.request("UPDATE MyTable 0 /Something,10"); //Request to Update the 'Something
 ```
 
 ## Support me !
-<a href="https://www.buymeacoffee.com/Doomiprane"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-blue.png" width="20%" height="20%"></a>
+<a href="https://www.buymeacoffee.com/Doomiprane" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-blue.png" width="20%" height="20%"></a>

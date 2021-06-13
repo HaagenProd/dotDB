@@ -62,6 +62,8 @@ var result = db.find("FINDAND MyTable,*,Something;==;1000"); //Request to find l
 ```
 ### 'API' style (WIP)
 ```C#
+using dotDB;
+
 Database db = new Database("MyDatabase");
 
 Dictionary<string, Table.type> tableStructure = new Dictionary<string, Table.type>() { //Create tableStructure

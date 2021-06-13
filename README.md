@@ -11,6 +11,34 @@ Maybe later, it will be possible to use dotDB for databases in the cloud.
 
 > For the moment, no other functionalities other than the basic ones of a database are planned. 
 
+## What can be done?
+- [x] Creating Databases
+- [x] Adding/Removing Tables to the Database
+- [x] Adding/Removing Data in the tables
+- [x] Editing existing data in a table
+- [ ] Finding specific data and get it to use it in a program 
+- [ ] Loading/Saving databases
+
+## Types of data that the database can contain
+- Int32 
+  ```C# 
+    dotDB.Table.type.Int
+  ```
+- Float
+  ```C# 
+    dotDB.Table.type.Float
+  ```
+- String
+  ```C# 
+    dotDB.Table.type.String
+  ```
+- Boolean
+  ```C# 
+    dotDB.Table.type.Bool
+  ```
+
+> Storing custom Objects is a little tricky
+
 ## Working exemples
 
 >Examples are subject to change with updates 

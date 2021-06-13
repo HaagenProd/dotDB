@@ -20,22 +20,22 @@ Maybe later, it will be possible to use dotDB for databases in the cloud.
 - [ ] Loading/Saving databases
 
 ## Types of data that the database can contain
-- Int32 
-  ```C# 
-    dotDB.Table.type.Int
-  ```
-- Float
-  ```C# 
-    dotDB.Table.type.Float
-  ```
-- String
-  ```C# 
-    dotDB.Table.type.String
-  ```
-- Boolean
-  ```C# 
-    dotDB.Table.type.Bool
-  ```
+### Int32 
+```C# 
+  dotDB.Table.type.Int
+```
+### Float
+```C# 
+  dotDB.Table.type.Float
+```
+### String
+```C# 
+  dotDB.Table.type.String
+```
+### Boolean
+```C# 
+  dotDB.Table.type.Bool
+```
 
 > Storing custom Objects is a little tricky
 

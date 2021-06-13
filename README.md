@@ -18,6 +18,7 @@ Maybe later, it will be possible to use dotDB for databases in the cloud.
 - [x] Editing existing data in a table
 - [ ] Finding specific data and get it to use it in a program 
 - [ ] Loading/Saving databases
+- [ ] Using Custom IDs in tables
 
 ## Types of data that the database can contain
 ### Int32 
@@ -72,6 +73,17 @@ db.add_data("MyTable", new Dictionary<string, string>() //Add data to 'MyTable' 
 {
     {"Something", "100"},
     {"Other", "I love it" }
+});
+
+db.add_data("MyTable", new Dictionary<string, string>()
+{
+    {"Something", "6789" },
+    {"Other", "This is working" }
+});
+
+db.update_data("MyTable", "1", new Dictionary<string, string>()
+{
+    {"Other", "And it's still working" }
 });
 
 db.remove_table("MyTable"); //Remove 'MyTable' table from 'MyDatabase' database.

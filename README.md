@@ -57,6 +57,8 @@ db.edit("INSERT MyTable /Something,1025;Other,Hello"); //Request to Insert data 
 db.edit("SHOW MyTable"); //Request to show in the Console 'MyTable' table
 
 db.edit("UPDATE MyTable 0 /Something,10"); //Request to Update the 'Something' value in 'MyTable' table
+
+var result = db.find("FINDAND MyTable,*,Something;==;1000"); //Request to find lines where 'Something' is equal to '1000' in 'MyTable' table
 ```
 ### 'API' style (WIP)
 ```C#

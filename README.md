@@ -81,7 +81,7 @@ db.add_data("MyTable", new Dictionary<string, string>()
     {"Other", "This is working" }
 });
 
-db.update_data("MyTable", "1", new Dictionary<string, string>()
+db.update_data("MyTable", "1", new Dictionary<string, string>() //Edit the value of the 'key' field in line 1 of the'MyTable' table
 {
     {"Other", "And it's still working" }
 });

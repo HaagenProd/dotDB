@@ -19,8 +19,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace dotDB
 {
+    /// <summary>
+    /// Just to throw predefined Exceptions
+    /// </summary>
     static class exceptionThrower
     {
         public static ArgumentException exception_NoKeyInStructure(string table, string faultyKey)

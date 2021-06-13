@@ -193,7 +193,7 @@ namespace dotDB
 
 		public void add_table(string tableName, Dictionary<string, Table.type> tableStructure, bool useCustomID = false)
 		{
-			Table newTable = new dotDB.Table(tableName, tableStructure, useCustomID);
+			Table newTable = new Table(tableName, tableStructure, useCustomID);
 			db_tables.Add(tableName, newTable);
 		}
 
@@ -242,6 +242,22 @@ namespace dotDB
 		{
 			db_tables.Remove(tableName);
 		}
+
+		public List<Data> find(string table, string[] keysToReturn, string[] keys, Table.comparator comparators, string[] values)
+        {
+			Table currentTable;
+
+            if (db_tables.ContainsKey(table))
+            {
+				currentTable = db_tables[table];
+
+				throw new NotImplementedException("WIP");
+            }
+            else
+            {
+				throw exceptionThrower.exception_NoCorrespondingTableInDB(db_Name, table);
+            }
+        }
 
 		public List<Data> find(string request)
         {

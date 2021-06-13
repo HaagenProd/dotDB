@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace dotDB
 {
+    /// <summary>
+    /// Class representing the data of a cell in a table
+    /// </summary>
     public class Cell{
 
         private List<String> nonAssigned = new List<string>() {"n/a", "N/A"};

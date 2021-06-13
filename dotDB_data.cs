@@ -21,6 +21,9 @@ using System.Threading.Tasks;
 
 namespace dotDB
 {
+    /// <summary>
+    /// Class containing the result of a search in the database.
+    /// </summary>
     public class Data
     {
         private string ID;

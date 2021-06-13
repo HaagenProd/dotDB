@@ -8,21 +8,25 @@ class Program
     {
         Database db = new Database("MyDataBase");
 
-        /*if (db.request("CREATE TABLE MaTable /INT,Prix;STRING,Nom"))
+        if (db.edit("CREATE TABLE MyTable /INT,Prix;STRING,Nom"))
         {
-            db.request("SHOW MaTable");
+            db.edit("SHOW MyTable");
 
-            db.request("INSERT MaTable /Prix,150;Nom,Un écran");
-            db.request("INSERT MaTable /Prix,10;Nom,Un Bonbon");
+            db.edit("INSERT MyTable /Prix,150;Nom,Un écran");
+            db.edit("INSERT MyTable /Prix,10;Nom,Un Bonbon");
 
-            db.request("SHOW MaTable");
+            db.edit("SHOW MyTable");
 
-            db.request("UPDATE MaTable 0 /Prix,1000;Nom,Un Super Ecran");
+            db.edit("UPDATE MyTable 0 /Prix,1000;Nom,Un Super Ecran");
 
-            db.request("SHOW MaTable");
-        }*/
+            var result = db.find("FINDAND MyTable,*,Prix;==;1000");
 
-        Dictionary<string, Table.type> tableStructure = new Dictionary<string, Table.type>() { //Create tableStructure
+            Console.WriteLine(result.Count);
+
+            db.edit("SHOW MyTable");
+        }
+
+        /*Dictionary<string, Table.type> tableStructure = new Dictionary<string, Table.type>() { //Create tableStructure
             {"Something", Table.type.Int },
             {"Other", Table.type.String }
         };
@@ -35,6 +39,17 @@ class Program
             {"Other", "I love it" }
         });
 
-        db.remove_table("MyTable"); //Remove the new Table
+        db.add_data("MyTable", new Dictionary<string, string>()
+        {
+            {"Something", "6789" },
+            {"Other", "This is working" }
+        });
+
+        db.update_data("MyTable", "1", new Dictionary<string, string>()
+        {
+            {"Other", "And it's still working" }
+        });
+
+        db.remove_table("MyTable"); //Remove the new Table*/
     }
 }

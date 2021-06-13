@@ -20,6 +20,9 @@ using System.IO;
 
 namespace dotDB
 {
+    /// <summary>
+    /// Class representing a database table
+    /// </summary>
     public class Table{
         
         readonly string tableName;
@@ -31,11 +34,17 @@ namespace dotDB
         private bool useCustomID;
         private int incrementedID = 0;
 
+        /// <summary>
+        /// Type of data
+        /// </summary>
         public enum type
         {
             Int, Float, String, Bool, Null
         }
         
+        /// <summary>
+        /// Comparators for the research
+        /// </summary>
         public enum comparator{
             Sup_Equal, Inf_Equal, Equal, Sup, Inf, Not
         }

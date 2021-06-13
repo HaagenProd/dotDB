@@ -16,13 +16,13 @@ using dotDB;
 
 Database db = new Database("MyDatabase");
 
-db.request("CREATE TABLE MyTable /INT,Something;STRING,Other"); //Request to create a new table 'MyTable'
+db.edit("CREATE TABLE MyTable /INT,Something;STRING,Other"); //Request to create a new table 'MyTable'
 
-db.request("INSERT MyTable /Something,1025;Other,Hello"); //Request to Insert data into 'MyTable' table
+db.edit("INSERT MyTable /Something,1025;Other,Hello"); //Request to Insert data into 'MyTable' table
 
-db.request("SHOW MyTable"); //Request to show in the Console 'MyTable' table
+db.edit("SHOW MyTable"); //Request to show in the Console 'MyTable' table
 
-db.request("UPDATE MyTable 0 /Something,10"); //Request to Update the 'Something' value in 'MyTable' table
+db.edit("UPDATE MyTable 0 /Something,10"); //Request to Update the 'Something' value in 'MyTable' table
 ```
 ### 'API' style (WIP)
 ```C#
@@ -35,7 +35,13 @@ Dictionary<string, Table.type> tableStructure = new Dictionary<string, Table.typ
 
 db.add_table("MyTable", tableStructure); //Initialize the new Table
 
-db.remove_table("MyTable"); //Remove the new Table
+db.add_data("MyTable", new Dictionary<string, string>() //Add data to 'MyTable' table.
+{
+    {"Something", "100"},
+    {"Other", "I love it" }
+});
+
+db.remove_table("MyTable"); //Remove 'MyTable' table from 'MyDatabase' database.
 ```
 
 ## Support me !

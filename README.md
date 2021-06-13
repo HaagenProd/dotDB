@@ -16,7 +16,7 @@ Maybe later, it will be possible to use dotDB for databases in the cloud.
 - [x] Adding/Removing Tables to the Database
 - [x] Adding/Removing Data in the tables
 - [x] Editing existing data in a table
-- [ ] Finding specific data and get it to use it in a program 
+- [ ] Finding specific data and get it to use it in a program (WIP)
 - [ ] Loading/Saving databases
 - [ ] Using Custom IDs in tables
 

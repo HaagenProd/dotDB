@@ -1,4 +1,19 @@
-﻿using System;
+﻿/*
+	dotDB is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    any later version.
+
+    dotDB is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with dotDB.  If not, see <https://www.gnu.org/licenses/>
+*/
+
+using System;
 using System.Collections.Generic;
 
 namespace dotDB
@@ -13,7 +28,7 @@ namespace dotDB
 			db_Name = Name;
 		}
 
-		public bool request(string request)
+		public bool edit(string request)
         {
 			string[] keysAndValues_ = request.Split("/");
 			string[] keysAndValues = keysAndValues_.Length == 2 ? keysAndValues_[1].Split(";") : new string[0];
@@ -228,7 +243,7 @@ namespace dotDB
 			db_tables.Remove(tableName);
 		}
 
-		public List<Data> research(string request)
+		public List<Data> find(string request)
         {
 			string[] splitedRequest = request.Split(",");
 			
@@ -282,12 +297,12 @@ namespace dotDB
 
 			List<Data> results = new List<Data>();
 
-			foreach (var searchResult in result)
+			foreach (var searchResult in result.Keys)
             {
-				
+				results.Add(new Data(searchResult, result[searchResult]));
             }
 
-			return null;
+			return results;
         }
 
 		private Table.type interpretType(string type)

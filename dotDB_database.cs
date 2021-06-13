@@ -228,7 +228,7 @@ namespace dotDB
 			db_tables.Remove(tableName);
 		}
 
-		public Dictionary<string, Dictionary<string, Cell>> research(string request)
+		public List<Data> research(string request)
         {
 			string[] splitedRequest = request.Split(",");
 			
@@ -280,7 +280,14 @@ namespace dotDB
 				}				
 			}
 
-			return result;
+			List<Data> results = new List<Data>();
+
+			foreach (var searchResult in result)
+            {
+				
+            }
+
+			return null;
         }
 
 		private Table.type interpretType(string type)
